@@ -82,20 +82,25 @@ import { useAuthStore } from "../stores/authStore";
 export default {
   data() {
     return {
+      username: "",
       email: "",
       password: "",
+      confirmpassword: "",
       error: null,
     };
   },
   methods: {
     async signup() {
       const authStore = useAuthStore();
-      const success = await authStore.signup(this.email, this.password);
-
-      if (success) {
+      if (this.password !== this.confirmpassword) {
+        this.error = "Passwords do not match";
+        return;
+      }
+      try {
+        await authStore.register(this.username, this.email, this.password);
         this.$router.push("/sign_in");
-      } else {
-        this.error = authStore.error;
+      } catch (error) {
+        this.error = error.message;
       }
     },
   },
