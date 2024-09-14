@@ -34,23 +34,25 @@
           />
         </div>
         <div>
-          <input
-            v-model="password"
-            class="w-full px-4 py-2 rounded-full"
-            placeholder="Password"
-            type="password"
-            required
-          />
-        </div>
-        <div>
-          <input
-            v-model="confirmpassword"
-            class="w-full px-4 py-2 rounded-full"
-            placeholder="Confirm Password"
-            type="password"
-            required
-          />
-        </div>
+      <label for="password">Password</label>
+      <input 
+        :type="showPassword ? 'text' : 'password'" 
+        id="password" 
+        v-model="password" 
+        @click="toggleShowPassword"
+      />
+      <button @click="toggleShowPassword">Show/Hide</button>
+    </div>
+    <div>
+      <label for="confirm-password">Confirm Password</label>
+      <input 
+        :type="showConfirmPassword ? 'text' : 'password'" 
+        id="confirm-password" 
+        v-model="confirmPassword" 
+        @click="toggleShowConfirmPassword"
+      />
+      <button @click="toggleShowConfirmPassword">Show/Hide</button>
+    </div>
         <div class="text-center mt-6">
           <button class="px-6 py-2 bg-gray-300 rounded-full" type="submit">
             Sign-up

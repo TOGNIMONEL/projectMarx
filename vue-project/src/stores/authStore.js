@@ -19,6 +19,17 @@ export const useAuthStore = defineStore('auth', () => {
         }
     };
 
+    const showPassword = ref(false);
+    const showConfirmPassword = ref(false);
+
+    const toggleShowPassword = () => {
+        showPassword.value = !showPassword.value;
+    };
+
+    const toggleShowConfirmPassword = () => {
+        showConfirmPassword.value = !showConfirmPassword.value;
+    };
+
     const register = (username, email, password, confirmPassword) => {
         if (users.some(user => user.username === username)) {
             throw new Error('Username already exists');
@@ -32,7 +43,7 @@ export const useAuthStore = defineStore('auth', () => {
         if (password !== confirmPassword) {
             throw new Error('Passwords do not match');
         }
-        const hashedPassword = bcrypt.hashSync(password, 10); // Hash the password
+        const hashedPassword = bcrypt.hash(password, 10); // Hash the password
         users.push({ username, email, password: hashedPassword });
         localStorage.setItem('users', JSON.stringify(users));
         localStorage.setItem('authenticated', 'true');
@@ -44,5 +55,14 @@ export const useAuthStore = defineStore('auth', () => {
         isAuthenticated.value = false;
     };
 
-    return { isAuthenticated, login, register, logout };
+    return { 
+        isAuthenticated, 
+        login, 
+        register, 
+        logout, 
+        showPassword, 
+        showConfirmPassword, 
+        toggleShowPassword, 
+        toggleShowConfirmPassword 
+    };
 });
